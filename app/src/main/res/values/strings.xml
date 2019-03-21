@@ -1,3 +1,7 @@
 <resources>
 	<string name="app_name">Twitter Client</string>
+
+	<!--Login-->
+	<string name="login_login_button">Log In</string>
+	<string name="login_login_error">Couldn\'t login. Invalid username or password</string>
 </resources>
