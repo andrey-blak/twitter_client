@@ -22,5 +22,7 @@
 
 		<activity android:name=".ui.tweets.TweetsActivity"/>
 
+		<activity android:name=".ui.newtweet.NewTweetActivity"/>
+
 	</application>
 </manifest>

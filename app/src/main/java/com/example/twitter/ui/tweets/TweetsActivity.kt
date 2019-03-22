@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.twitter.R
 import com.example.twitter.data.dto.Tweet
 import com.example.twitter.ui.TwitterApp
+import com.example.twitter.ui.newtweet.NewTweetActivity
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import kotlinx.android.synthetic.main.activity_tweets.*
 import javax.inject.Inject
@@ -26,14 +27,17 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_tweets)
 
+		tweets_add_tweet_button.setOnClickListener { presenter.onNewTweetClicked() }
 		initTweets()
 		loadTweets()
 	}
 
 	override fun showProgress() {
+		// todo implement
 	}
 
 	override fun hideProgress() {
+		// todo implement
 	}
 
 	override fun showTweets(tweets: List<Tweet>) {
@@ -41,6 +45,12 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 	}
 
 	override fun showError() {
+		// todo implement
+	}
+
+	override fun goToNewTweet() {
+		val intent = NewTweetActivity.createIntent(this)
+		startActivity(intent)
 	}
 
 	private fun initTweets() {

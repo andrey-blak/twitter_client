@@ -29,4 +29,10 @@ class TweetsPresenter @Inject constructor(
 			addDisposable(disposable)
 		}
 	}
+
+	fun onNewTweetClicked() {
+		ifViewAttached { view ->
+			view.goToNewTweet()
+		}
+	}
 }

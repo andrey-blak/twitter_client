@@ -4,4 +4,7 @@
 	<!--Login-->
 	<string name="login_login_button">Log In</string>
 	<string name="login_login_error">Couldn\'t login. Invalid username or password</string>
+
+	<!--Tweets-->
+	<string name="tweets_new_tweet_button">New tweet</string>
 </resources>

@@ -8,4 +8,5 @@ interface TweetsView : MvpView {
 	fun hideProgress()
 	fun showTweets(tweets: List<Tweet>)
 	fun showError()
+	fun goToNewTweet()
 }
