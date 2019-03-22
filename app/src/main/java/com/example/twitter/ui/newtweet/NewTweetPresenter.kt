@@ -1,10 +1,33 @@
 package com.example.twitter.ui.newtweet
 
-import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
+import com.example.twitter.data.api.ApiResponse
+import com.example.twitter.domain.usecases.SendTweetUseCase
+import com.example.twitter.ui.base.BasePresenter
 import javax.inject.Inject
 
 class NewTweetPresenter @Inject constructor(
-
-) : MvpBasePresenter<NewTweetView>() {
-
+	private val sendTweetUseCase: SendTweetUseCase
+) : BasePresenter<NewTweetView>() {
+	fun onSendClicked() {
+		ifViewAttached { view ->
+			val message = view.getMessage()
+			view.showProgress()
+			val disposable = sendTweetUseCase.send(message)
+				.subscribe({ apiResponse ->
+					view.hideProgress()
+					when (apiResponse) {
+						is ApiResponse.Success -> {
+							view.goToTweets()
+						}
+						is ApiResponse.Error -> {
+							view.showError()
+						}
+					}
+				}, { throwable ->
+					view.hideProgress()
+					view.showError()
+				})
+			addDisposable(disposable)
+		}
+	}
 }

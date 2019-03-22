@@ -7,6 +7,7 @@ import com.example.twitter.ui.newtweet.NewTweetActivity
 import com.example.twitter.ui.splash.SplashActivity
 import com.example.twitter.ui.tweets.TweetsActivity
 import dagger.Component
+import javax.inject.Singleton
 
 @Component(
 	modules = [
@@ -14,6 +15,7 @@ import dagger.Component
 		PreferencesModule::class
 	]
 )
+@Singleton
 interface AppComponent {
 	fun inject(loginActivity: LoginActivity)
 	fun inject(loginActivity: TweetsActivity)
