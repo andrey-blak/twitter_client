@@ -7,6 +7,7 @@
 
 	<!--Tweets-->
 	<string name="tweets_new_tweet_button">New tweet</string>
+	<string name="tweets_logout_button">Logout</string>
 
 	<!--New Tweet-->
 	<string name="new_tweet_send_button">Send</string>

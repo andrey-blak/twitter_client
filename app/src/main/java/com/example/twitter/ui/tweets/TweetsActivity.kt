@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.twitter.R
 import com.example.twitter.data.dto.Tweet
 import com.example.twitter.ui.TwitterApp
+import com.example.twitter.ui.login.LoginActivity
 import com.example.twitter.ui.newtweet.NewTweetActivity
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import kotlinx.android.synthetic.main.activity_tweets.*
@@ -28,6 +29,7 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 		setContentView(R.layout.activity_tweets)
 
 		tweets_add_tweet_button.setOnClickListener { presenter.onNewTweetClicked() }
+		tweets_logout_button.setOnClickListener { presenter.onLogoutClicked() }
 		initTweets()
 	}
 
@@ -55,6 +57,11 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 
 	override fun goToNewTweet() {
 		val intent = NewTweetActivity.createIntent(this)
+		startActivity(intent)
+	}
+
+	override fun goToLogin() {
+		val intent = LoginActivity.createIntent(this)
 		startActivity(intent)
 	}
 

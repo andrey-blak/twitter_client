@@ -36,4 +36,11 @@ class UserRepository @Inject constructor(
 			preferences.getUsername()
 		}
 	}
+
+	@CheckResult
+	fun clearUser(): Completable {
+		return Completable.fromAction {
+			preferences.clear()
+		}
+	}
 }

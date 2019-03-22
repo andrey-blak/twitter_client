@@ -2,11 +2,13 @@ package com.example.twitter.ui.tweets
 
 import com.example.twitter.data.api.ApiResponse
 import com.example.twitter.domain.usecases.LoadTweetsUseCase
+import com.example.twitter.domain.usecases.LogoutUseCase
 import com.example.twitter.ui.base.BasePresenter
 import javax.inject.Inject
 
 class TweetsPresenter @Inject constructor(
-	private val loadTweetsUseCase: LoadTweetsUseCase
+	private val loadTweetsUseCase: LoadTweetsUseCase,
+	private val logoutUseCase: LogoutUseCase
 ) : BasePresenter<TweetsView>() {
 	fun loadTweets() {
 		ifViewAttached { view ->
@@ -33,6 +35,16 @@ class TweetsPresenter @Inject constructor(
 	fun onNewTweetClicked() {
 		ifViewAttached { view ->
 			view.goToNewTweet()
+		}
+	}
+
+	fun onLogoutClicked() {
+		ifViewAttached { view ->
+			val disposable = logoutUseCase.logout()
+				.subscribe {
+					view.goToLogin()
+				}
+			addDisposable(disposable)
 		}
 	}
 }

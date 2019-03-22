@@ -9,4 +9,5 @@ interface TweetsView : MvpView {
 	fun showTweets(tweets: List<Tweet>)
 	fun showError()
 	fun goToNewTweet()
+	fun goToLogin()
 }
