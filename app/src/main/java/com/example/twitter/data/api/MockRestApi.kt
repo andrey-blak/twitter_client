@@ -13,7 +13,7 @@ class MockRestApi : RestApi {
 				ApiResponse.Error<Void>()
 			}
 		}
-			.delay(DELAY_MS, TimeUnit.MILLISECONDS)
+			.delay()
 	}
 
 	override fun getTweets(): Single<ApiResponse<List<Tweet>>> {
@@ -33,7 +33,11 @@ class MockRestApi : RestApi {
 
 			ApiResponse.Success(tweets)
 		}
-			.delay(DELAY_MS, TimeUnit.MILLISECONDS)
+			.delay()
+	}
+
+	private fun <T> Single<T>.delay(): Single<T> {
+		return delay(DELAY_MS, TimeUnit.MILLISECONDS)
 	}
 
 	companion object {
