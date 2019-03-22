@@ -16,13 +16,18 @@ class LoginUseCase @Inject constructor(
 	@CheckResult
 	public fun login(username: String, password: String): Single<ApiResponse<out Any?>> {
 		return api.login(username, password)
-			// todo inject
-			.subscribeOn(Schedulers.io())
+			.subscribeOn(Schedulers.io()) // todo inject
 			.flatMap { response ->
-				userRepository.setIsLoggedIn(true)
-					.andThen(Single.just(response))
+				when (response) {
+					is ApiResponse.Success -> {
+						userRepository.setIsLoggedIn(true)
+							.andThen(Single.just(response))
+					}
+					is ApiResponse.Error -> {
+						Single.just(response)
+					}
+				}
 			}
-			// todo inject
-			.observeOn(AndroidSchedulers.mainThread())
+			.observeOn(AndroidSchedulers.mainThread()) // todo inject
 	}
 }
