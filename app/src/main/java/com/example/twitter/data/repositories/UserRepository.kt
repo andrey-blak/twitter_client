@@ -22,4 +22,18 @@ class UserRepository @Inject constructor(
 			preferences.isLoggedIn()
 		}
 	}
+
+	@CheckResult
+	fun setUsername(username: String): Completable {
+		return Completable.fromAction {
+			preferences.setUsername(username)
+		}
+	}
+
+	@CheckResult
+	fun getUsername(): Single<String> {
+		return Single.fromCallable {
+			preferences.getUsername()
+		}
+	}
 }

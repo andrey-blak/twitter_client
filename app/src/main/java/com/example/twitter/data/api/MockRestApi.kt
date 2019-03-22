@@ -1,6 +1,7 @@
 package com.example.twitter.data.api
 
 import com.example.twitter.data.dto.Tweet
+import com.example.twitter.data.dto.User
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
@@ -18,12 +19,13 @@ class MockRestApi : RestApi {
 		Tweet("Ford Rice", 1456090019926, "tempor adipisicing ut ut enim laboris incididunt occaecat velit est adipisicing duis cupidatat nostrud quis adipisicing")
 	)
 
-	override fun login(username: String, password: String): Single<ApiResponse<out Any?>> {
-		return Single.fromCallable {
+	override fun login(username: String, password: String): Single<ApiResponse<User>> {
+		return Single.fromCallable<ApiResponse<User>> {
 			if (username == USERNAME && password == PASSWORD) {
-				ApiResponse.Success<Any?>(null)
+				val user = User(username)
+				ApiResponse.Success(user)
 			} else {
-				ApiResponse.Error<Void>()
+				ApiResponse.Error()
 			}
 		}
 			.delay()
