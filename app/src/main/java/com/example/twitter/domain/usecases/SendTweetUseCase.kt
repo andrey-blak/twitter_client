@@ -21,9 +21,7 @@ class SendTweetUseCase @Inject constructor(
 
 				val tweet = Tweet(username, timeMs, message)
 				api.postTweet(tweet)
-					// todo inject
 					.subscribeOn(Schedulers.io())
-					// todo inject
 					.observeOn(AndroidSchedulers.mainThread())
 			}
 	}

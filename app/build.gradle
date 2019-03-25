@@ -16,7 +16,7 @@ android {
 		targetSdkVersion 28
 		versionCode 1
 		versionName '1.0'
-		testInstrumentationRunner 'com.example.twitter.DexOpenerTestRunner'
+		testInstrumentationRunner 'com.example.twitter.TestRunner'
 	}
 
 	buildTypes {
@@ -74,4 +74,5 @@ dependencies {
 	androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
 	androidTestImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
 	androidTestImplementation 'org.mockito:mockito-android:2.25.1'
+	androidTestImplementation 'com.squareup.rx.idler:rx2-idler:0.9.1'
 }

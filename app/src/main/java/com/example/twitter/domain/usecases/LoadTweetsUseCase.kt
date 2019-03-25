@@ -15,9 +15,7 @@ class LoadTweetsUseCase @Inject constructor(
 	@CheckResult
 	fun loadTweets(): Single<ApiResponse<List<Tweet>>> {
 		return api.getTweets()
-			// todo inject
 			.subscribeOn(Schedulers.io())
-			// todo inject
 			.observeOn(AndroidSchedulers.mainThread())
 	}
 }

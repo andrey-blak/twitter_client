@@ -12,6 +12,6 @@ class LogoutUseCase @Inject constructor(
 	@CheckResult
 	fun logout(): Completable {
 		return userRepository.clearUser()
-			.observeOn(AndroidSchedulers.mainThread()) // todo inject
+			.observeOn(AndroidSchedulers.mainThread())
 	}
 }

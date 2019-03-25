@@ -18,7 +18,7 @@ class LoginUseCase @Inject constructor(
 	@CheckResult
 	public fun login(username: String, password: String): Single<ApiResponse<User>> {
 		return api.login(username, password)
-			.subscribeOn(Schedulers.io()) // todo inject
+			.subscribeOn(Schedulers.io())
 			.flatMap { response ->
 				when (response) {
 					is ApiResponse.Success -> {
@@ -32,6 +32,6 @@ class LoginUseCase @Inject constructor(
 					}
 				}
 			}
-			.observeOn(AndroidSchedulers.mainThread()) // todo inject
+			.observeOn(AndroidSchedulers.mainThread())
 	}
 }
