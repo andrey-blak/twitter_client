@@ -8,6 +8,9 @@ user
 password:
 pass
 
+# API
+The api has been mocked to handle login and return the predefined list of tweets. The data is returned with 1 second delay ti simulate the network delay. No pagination or or ability to load only the newer tweets has been implemented yet.
+
 # Error handling
 Currently, errors are handled only on the login screen, in the most trivial way. In a real application, tha network and api errors should be also mapped to presentation level errors (defined as enum instances or sealed class subclasses).
 
