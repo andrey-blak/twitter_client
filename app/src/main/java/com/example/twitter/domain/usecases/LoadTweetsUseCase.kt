@@ -1,20 +1,20 @@
 package com.example.twitter.domain.usecases
 
 import androidx.annotation.CheckResult
-import com.example.twitter.data.api.ApiResponse
-import com.example.twitter.data.api.RestApi
+import com.example.twitter.data.dto.Response
 import com.example.twitter.data.dto.Tweet
-import io.reactivex.Single
+import com.example.twitter.data.repositories.TweetsRepository
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoadTweetsUseCase @Inject constructor(
-	private val api: RestApi
+	private val tweetsRepository: TweetsRepository
 ) {
 	@CheckResult
-	fun loadTweets(): Single<ApiResponse<List<Tweet>>> {
-		return api.getTweets()
+	fun loadTweets(): Observable<Response<List<Tweet>>> {
+		return tweetsRepository.getTweets()
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 	}

@@ -1,6 +1,6 @@
 package com.example.twitter.ui.tweets
 
-import com.example.twitter.data.api.ApiResponse
+import com.example.twitter.data.dto.Response
 import com.example.twitter.domain.usecases.LoadTweetsUseCase
 import com.example.twitter.domain.usecases.LogoutUseCase
 import com.example.twitter.ui.base.BasePresenter
@@ -17,11 +17,11 @@ class TweetsPresenter @Inject constructor(
 				.subscribe({ response ->
 					view.hideProgress()
 					when (response) {
-						is ApiResponse.Success -> {
+						is Response.Success -> {
 							val tweets = response.data
 							view.showTweets(tweets)
 						}
-						is ApiResponse.Error -> view.showError()
+						is Response.Error -> view.showError()
 					}
 				},
 					{ throwable ->
