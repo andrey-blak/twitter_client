@@ -2,20 +2,12 @@ package com.example.twitter.ui.login
 
 import com.example.twitter.data.api.ApiResponse
 import com.example.twitter.domain.usecases.LoginUseCase
-import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
-import io.reactivex.disposables.CompositeDisposable
+import com.example.twitter.ui.base.BasePresenter
 import javax.inject.Inject
 
 class LoginPresenter @Inject constructor(
 	private val loginUseCase: LoginUseCase
-) : MvpBasePresenter<LoginView>() {
-	private val disposables = CompositeDisposable()
-
-	override fun detachView() {
-		super.detachView()
-		disposables.clear()
-	}
-
+) : BasePresenter<LoginView>() {
 	public fun login(username: String, password: String) {
 		ifViewAttached { view ->
 			view.showProgress()
@@ -32,7 +24,7 @@ class LoginPresenter @Inject constructor(
 						view.hideProgress()
 						view.showInvalidCredentialsError()
 					})
-			disposables.add(disposable)
+			addDisposable(disposable)
 		}
 	}
 }

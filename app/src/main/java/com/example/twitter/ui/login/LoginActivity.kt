@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.twitter.R
 import com.example.twitter.ui.TwitterApp
+import com.example.twitter.ui.tweets.TweetsActivity
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
@@ -43,7 +44,9 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
 	}
 
 	override fun goToTweets() {
-		// todo implement
+		val intent = TweetsActivity.createIntent(this)
+		startActivity(intent)
+		finish()
 	}
 
 	override fun showInvalidCredentialsError() {
