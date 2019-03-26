@@ -1,14 +1,13 @@
 package com.example.twitter.ui.login
 
 import com.example.twitter.data.api.ApiResponse
-import com.example.twitter.data.api.RestApi
 import com.example.twitter.domain.usecases.LoginUseCase
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class LoginPresenter(
-	// todo inject
-	val api: RestApi
+class LoginPresenter @Inject constructor(
+	private val loginUseCase: LoginUseCase
 ) : MvpBasePresenter<LoginView>() {
 	private val disposables = CompositeDisposable()
 
@@ -18,8 +17,7 @@ class LoginPresenter(
 	}
 
 	public fun login(username: String, password: String) {
-		val loginUseCase = LoginUseCase(api)
-		ifViewAttached {view ->
+		ifViewAttached { view ->
 			view.showProgress()
 			val disposable = loginUseCase.login(username, password)
 				.subscribe(

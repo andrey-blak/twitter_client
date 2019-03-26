@@ -2,6 +2,7 @@
 	package="com.example.twitter">
 
 	<application
+		android:name=".ui.TwitterApp"
 		android:allowBackup="true"
 		android:label="@string/app_name"
 		android:icon="@mipmap/ic_launcher"

@@ -6,11 +6,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.twitter.R
-import com.example.twitter.data.api.MockRestApi
+import com.example.twitter.ui.TwitterApp
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import javax.inject.Inject
 
 class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
+	@Inject
+	lateinit var loginPresenter: LoginPresenter
+
 	companion object {
 		@JvmStatic
 		fun createIntent(context: Context): Intent {
@@ -19,10 +23,11 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
 	}
 
 	override fun createPresenter(): LoginPresenter {
-		return LoginPresenter(MockRestApi())
+		return loginPresenter
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		TwitterApp.component.inject(this)
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
 
