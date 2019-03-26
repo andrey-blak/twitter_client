@@ -20,3 +20,7 @@ But in a real app, all the schedulers (and any other background executors) shoul
 
 # Log out
 The logout feature is implemented in the simplest way for the purpose of simplicity. In fact, all the asynchronous tasks, related to the previous user, should be canceled or their results should be ignored.
+
+# TODO
+● on launch, if the user is logged in, the app should automatically display older tweets and only query for newer ones
+The tweets repository hasn't been implemented yet. So the tweets are being reloaded every time the user gets to the Tweets screen. Actually, the `LoadTweetsUseCase` should subscribe to the tweets Observable (or Flowable) from the tweets repository. This will allow to get the tweets from a local storage (e.g. database) implicitly and receive newly sent tweets without reloading the tweets list.
