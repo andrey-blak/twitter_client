@@ -9,6 +9,7 @@ import com.example.twitter.data.dto.Tweet
 import com.example.twitter.data.mappers.TweetMapper
 import io.objectbox.BoxStore
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -21,6 +22,22 @@ class TweetsRepository @Inject constructor(
 			loadTweetsFromNetwork(),
 			getTweetsFromDatabase()
 		)
+	}
+
+	fun addTweet(username: String, timeMs: Long, message: String): Single<Response<com.example.twitter.data.database.Tweet>> {
+		return api.postTweet(username, timeMs, message)
+			.observeOn(Schedulers.io())
+			.map { apiResponse ->
+				when (apiResponse) {
+					is ApiResponse.Success -> {
+						val tweet = saveToDatabase(apiResponse.data)
+						Response.Success(tweet)
+					}
+					is ApiResponse.Error -> {
+						Response.Error<com.example.twitter.data.database.Tweet>()
+					}
+				}
+			}
 	}
 
 	private fun loadTweetsFromNetwork(): Observable<Response<out List<com.example.twitter.data.database.Tweet>>> {
@@ -60,5 +77,12 @@ class TweetsRepository @Inject constructor(
 				tweetBox.put(tweet)
 			}
 		}
+	}
+
+	private fun saveToDatabase(apiTweet: Tweet): com.example.twitter.data.database.Tweet {
+		val tweetBox = boxStore.tweetBox()
+		val tweet = TweetMapper().invoke(apiTweet)
+		tweetBox.put(tweet)
+		return tweet
 	}
 }

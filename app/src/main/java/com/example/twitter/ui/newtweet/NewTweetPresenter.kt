@@ -1,6 +1,6 @@
 package com.example.twitter.ui.newtweet
 
-import com.example.twitter.data.api.ApiResponse
+import com.example.twitter.data.dto.Response
 import com.example.twitter.domain.usecases.SendTweetUseCase
 import com.example.twitter.ui.base.BasePresenter
 import javax.inject.Inject
@@ -16,10 +16,10 @@ class NewTweetPresenter @Inject constructor(
 				.subscribe({ apiResponse ->
 					view.hideProgress()
 					when (apiResponse) {
-						is ApiResponse.Success -> {
+						is Response.Success -> {
 							view.goToTweets()
 						}
-						is ApiResponse.Error -> {
+						is Response.Error -> {
 							view.showError()
 						}
 					}

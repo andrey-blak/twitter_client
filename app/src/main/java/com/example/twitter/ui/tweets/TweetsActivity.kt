@@ -33,7 +33,6 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 		initTweets()
 	}
 
-	// todo Reload tweets to see the sent one for simplicity purpose. In the real app, the LoadTweetsUseCase should be subscribed to the tweets repository and get notified when a new tweet appears.
 	override fun onStart() {
 		super.onStart()
 		loadTweets()
