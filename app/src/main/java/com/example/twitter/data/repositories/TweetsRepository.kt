@@ -8,6 +8,7 @@ import com.example.twitter.data.dto.Response
 import com.example.twitter.data.dto.Tweet
 import com.example.twitter.data.mappers.TweetMapper
 import io.objectbox.BoxStore
+import io.objectbox.rx.RxQuery
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -17,11 +18,12 @@ class TweetsRepository @Inject constructor(
 	private val api: RestApi,
 	private val boxStore: BoxStore
 ) {
-	fun getTweets(): Observable<Response<out List<com.example.twitter.data.database.Tweet>>> {
-		return Observable.mergeArray(
-			loadTweetsFromNetwork(),
-			getTweetsFromDatabase()
-		)
+	fun observeTweets(): Observable<out List<com.example.twitter.data.database.Tweet>> {
+		return getTweetsFromDatabase()
+	}
+
+	fun loadTweets(): Observable<Response<Any?>> {
+		return loadTweetsFromNetwork()
 	}
 
 	fun addTweet(username: String, timeMs: Long, message: String): Single<Response<com.example.twitter.data.database.Tweet>> {
@@ -40,41 +42,43 @@ class TweetsRepository @Inject constructor(
 			}
 	}
 
-	private fun loadTweetsFromNetwork(): Observable<Response<out List<com.example.twitter.data.database.Tweet>>> {
+	private fun loadTweetsFromNetwork(): Observable<Response<Any?>> {
 		return api.getTweets()
 			.observeOn(Schedulers.io())
 			.flatMapObservable { apiResponse ->
-				when (apiResponse) {
+				val response: Response<Any?> = when (apiResponse) {
 					is ApiResponse.Success -> {
 						val tweets = apiResponse.data
 						saveToDatabase(tweets)
-						getTweetsFromDatabase()
+						Response.Success(null)
 					}
 					is ApiResponse.Error -> {
-						Observable.just(Response.Error<List<com.example.twitter.data.database.Tweet>>())
+						Response.Error()
 					}
 				}
+				return@flatMapObservable Observable.just(response)
 			}
 	}
 
-	private fun getTweetsFromDatabase(): Observable<Response.Success<out List<com.example.twitter.data.database.Tweet>>> {
-		return Observable.fromCallable {
-			val tweetBox = boxStore.tweetBox()
-			val tweets = tweetBox.all
-			Response.Success(tweets)
-		}
+	private fun getTweetsFromDatabase(): Observable<List<com.example.twitter.data.database.Tweet>> {
+		val tweetBox = boxStore.tweetBox()
+		val query = tweetBox.query()
+			.build()
+		return RxQuery.observable(query)
 	}
 
 	private fun saveToDatabase(apiTweets: List<Tweet>) {
 		val tweets = apiTweets.map(TweetMapper())
 		val tweetBox = boxStore.tweetBox()
-		for (tweet in tweets) {
-			val dbTweet = tweetBox.query()
-				.equal(Tweet_.uid, tweet.uid)
-				.build()
-				.findUnique()
-			if (dbTweet == null) {
-				tweetBox.put(tweet)
+		boxStore.runInTx {
+			for (tweet in tweets) {
+				val dbTweet = tweetBox.query()
+					.equal(Tweet_.uid, tweet.uid)
+					.build()
+					.findUnique()
+				if (dbTweet == null) {
+					tweetBox.put(tweet)
+				}
 			}
 		}
 	}

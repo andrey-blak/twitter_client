@@ -31,11 +31,7 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 		tweets_add_tweet_button.setOnClickListener { presenter.onNewTweetClicked() }
 		tweets_logout_button.setOnClickListener { presenter.onLogoutClicked() }
 		initTweets()
-	}
-
-	override fun onStart() {
-		super.onStart()
-		loadTweets()
+		presenter.init()
 	}
 
 	override fun showProgress() {
@@ -69,10 +65,6 @@ class TweetsActivity : MvpActivity<TweetsView, TweetsPresenter>(), TweetsView {
 		tweets_recyclerview.adapter = tweetsAdapter
 
 		tweets_recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-	}
-
-	private fun loadTweets() {
-		presenter.loadTweets()
 	}
 
 	companion object {
