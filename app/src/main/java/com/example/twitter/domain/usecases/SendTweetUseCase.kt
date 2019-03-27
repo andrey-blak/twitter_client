@@ -19,8 +19,7 @@ class SendTweetUseCase @Inject constructor(
 				// todo ideally, time should be obtained from an injected repository for better testability
 				val timeMs = System.currentTimeMillis()
 
-				val tweet = Tweet(username, timeMs, message)
-				api.postTweet(tweet)
+				api.postTweet(username, timeMs, message)
 					.subscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 			}

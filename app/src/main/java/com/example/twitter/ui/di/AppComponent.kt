@@ -1,6 +1,7 @@
 package com.example.twitter.ui.di
 
 import com.example.twitter.ui.di.modules.ApiModule
+import com.example.twitter.ui.di.modules.DatabaseModule
 import com.example.twitter.ui.di.modules.PreferencesModule
 import com.example.twitter.ui.login.LoginActivity
 import com.example.twitter.ui.newtweet.NewTweetActivity
@@ -12,7 +13,8 @@ import javax.inject.Singleton
 @Component(
 	modules = [
 		ApiModule::class,
-		PreferencesModule::class
+		PreferencesModule::class,
+		DatabaseModule::class
 	]
 )
 @Singleton
