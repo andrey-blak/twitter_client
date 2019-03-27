@@ -16,20 +16,36 @@ class TweetsRepository @Inject constructor(
 	private val api: RestApi,
 	private val boxStore: BoxStore
 ) {
-	fun getTweets(): Observable<Response<List<Tweet>>> {
+	fun getTweets(): Observable<Response<out List<com.example.twitter.data.database.Tweet>>> {
+		return Observable.mergeArray(
+			loadTweetsFromNetwork(),
+			getTweetsFromDatabase()
+		)
+	}
+
+	private fun loadTweetsFromNetwork(): Observable<Response<out List<com.example.twitter.data.database.Tweet>>> {
 		return api.getTweets()
 			.observeOn(Schedulers.io())
-			.map { apiResponse ->
+			.flatMapObservable { apiResponse ->
 				when (apiResponse) {
 					is ApiResponse.Success -> {
 						val tweets = apiResponse.data
 						saveToDatabase(tweets)
-						Response.Success(tweets)
+						getTweetsFromDatabase()
 					}
-					is ApiResponse.Error -> Response.Error<List<Tweet>>()
+					is ApiResponse.Error -> {
+						Observable.just(Response.Error<List<com.example.twitter.data.database.Tweet>>())
+					}
 				}
 			}
-			.toObservable()
+	}
+
+	private fun getTweetsFromDatabase(): Observable<Response.Success<out List<com.example.twitter.data.database.Tweet>>> {
+		return Observable.fromCallable {
+			val tweetBox = boxStore.tweetBox()
+			val tweets = tweetBox.all
+			Response.Success(tweets)
+		}
 	}
 
 	private fun saveToDatabase(apiTweets: List<Tweet>) {

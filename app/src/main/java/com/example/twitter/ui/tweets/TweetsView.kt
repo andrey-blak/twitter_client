@@ -1,6 +1,6 @@
 package com.example.twitter.ui.tweets
 
-import com.example.twitter.data.dto.Tweet
+import com.example.twitter.data.database.Tweet
 import com.hannesdorfmann.mosby3.mvp.MvpView
 
 interface TweetsView : MvpView {

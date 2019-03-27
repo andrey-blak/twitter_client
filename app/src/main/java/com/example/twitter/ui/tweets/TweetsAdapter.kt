@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twitter.R
-import com.example.twitter.data.dto.Tweet
+import com.example.twitter.data.database.Tweet
 import kotlinx.android.synthetic.main.tweet_item.view.*
 import java.text.SimpleDateFormat
 
-class TweetsAdapter (
+class TweetsAdapter(
 	private val context: Context
 ) : RecyclerView.Adapter<TweetsAdapter.TweetViewHolder>() {
 	private val tweets = mutableListOf<Tweet>()

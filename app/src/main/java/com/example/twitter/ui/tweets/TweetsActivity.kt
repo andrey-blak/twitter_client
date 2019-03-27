@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twitter.R
-import com.example.twitter.data.dto.Tweet
+import com.example.twitter.data.database.Tweet
 import com.example.twitter.ui.TwitterApp
 import com.example.twitter.ui.login.LoginActivity
 import com.example.twitter.ui.newtweet.NewTweetActivity
