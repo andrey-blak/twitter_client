@@ -6,6 +6,7 @@ import com.example.twitter.data.api.ApiResponse
 import com.example.twitter.data.api.RestApi
 import com.example.twitter.data.dto.User
 import com.example.twitter.ui.robots.loginRobot
+import com.example.twitter.ui.robots.tweetsRobot
 import com.example.twitter.ui.robots.verify
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -13,6 +14,9 @@ import io.reactivex.Single
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * The robot's verifications via [tweetsRobot] and [verify] are organized differently intentionally, for diversity purposes.
+ */
 class LoginActivityTest {
 	@JvmField
 	@Rule
@@ -39,7 +43,8 @@ class LoginActivityTest {
 			setUsername(username)
 			setPassword(validPassword)
 			login()
-		} verify {
+		}
+		tweetsRobot {
 			checkSuccessful()
 		}
 	}

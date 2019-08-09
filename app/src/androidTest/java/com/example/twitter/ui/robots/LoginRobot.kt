@@ -1,8 +1,12 @@
 package com.example.twitter.ui.robots
 
+import android.app.Activity
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers
 import com.example.twitter.R
 import com.example.twitter.ui.espressoktx.click
+import com.example.twitter.ui.espressoktx.onToast
 import com.example.twitter.ui.espressoktx.onView
 import com.example.twitter.ui.espressoktx.replaceText
 
@@ -36,5 +40,12 @@ class LoginRobot {
 
 	private fun onLoginButton(): ViewInteraction {
 		return onView((R.id.login_login_button))
+	}
+}
+
+class LoginResult {
+	fun checkError(activity: Activity) {
+		onToast(activity, R.string.login_login_error)
+			.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 	}
 }
