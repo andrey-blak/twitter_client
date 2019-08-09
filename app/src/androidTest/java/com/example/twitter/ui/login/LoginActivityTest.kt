@@ -6,6 +6,7 @@ import com.example.twitter.data.api.ApiResponse
 import com.example.twitter.data.api.RestApi
 import com.example.twitter.data.dto.User
 import com.example.twitter.robots.loginRobot
+import com.example.twitter.robots.verify
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
@@ -37,7 +38,8 @@ class LoginActivityTest {
 		loginRobot {
 			setUsername(username)
 			setPassword(validPassword)
-		}.login {
+			login()
+		} verify {
 			checkSuccessful()
 		}
 	}
@@ -53,7 +55,8 @@ class LoginActivityTest {
 		loginRobot {
 			setUsername(username)
 			setPassword(invalidPassword)
-		}.login {
+			login()
+		} verify {
 			checkError(activityRule.activity)
 		}
 	}

@@ -8,6 +8,8 @@ import com.example.twitter.espressoktx.replaceText
 
 fun loginRobot(action: LoginRobot.() -> Unit) = LoginRobot().apply(action)
 
+infix fun LoginRobot.verify(action: LoginResult.() -> Unit) : LoginResult = LoginResult().apply(action)
+
 class LoginRobot {
 	fun setUsername(username: String): LoginRobot {
 		onUsernameView().replaceText(username)
@@ -19,10 +21,9 @@ class LoginRobot {
 		return this
 	}
 
-	fun login(action: TweetsRobot.() -> Unit): TweetsRobot {
+	fun login(): LoginRobot {
 		onLoginButton().click()
-
-		return TweetsRobot().apply(action)
+		return this
 	}
 
 	private fun onUsernameView(): ViewInteraction {

@@ -8,7 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.twitter.R
 import com.example.twitter.espressoktx.onToast
 
-class TweetsRobot {
+class LoginResult {
 	fun checkSuccessful() {
 		onView(withId(R.id.tweets_recyclerview))
 			.check(matches(isDisplayed()))
