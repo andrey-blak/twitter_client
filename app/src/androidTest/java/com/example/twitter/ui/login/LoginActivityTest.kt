@@ -1,15 +1,11 @@
 package com.example.twitter.ui.login
 
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.rule.ActivityTestRule
-import com.example.twitter.R
 import com.example.twitter.daggerMockRule
 import com.example.twitter.data.api.ApiResponse
 import com.example.twitter.data.api.RestApi
 import com.example.twitter.data.dto.User
-import com.example.twitter.espressoktx.onToast
-import com.example.twitter.robots.LoginRobot
+import com.example.twitter.robots.loginRobot
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
@@ -38,12 +34,12 @@ class LoginActivityTest {
 
 		activityRule.launchActivity(null)
 
-		val result = LoginRobot()
-			.setUsername(username)
-			.setPassword(validPassword)
-			.login()
-
-		result.checkSuccessful()
+		loginRobot {
+			setUsername(username)
+			setPassword(validPassword)
+		}.login {
+			checkSuccessful()
+		}
 	}
 
 	@Test
@@ -54,12 +50,11 @@ class LoginActivityTest {
 			.thenReturn(Single.just(ApiResponse.Error()))
 
 		activityRule.launchActivity(null)
-		LoginRobot()
-			.setUsername(username)
-			.setPassword(invalidPassword)
-			.login()
-
-		onToast(activityRule.activity, R.string.login_login_error)
-			.check(matches(isDisplayed()))
+		loginRobot {
+			setUsername(username)
+			setPassword(invalidPassword)
+		}.login {
+			checkError(activityRule.activity)
+		}
 	}
 }

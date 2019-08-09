@@ -6,6 +6,8 @@ import com.example.twitter.espressoktx.click
 import com.example.twitter.espressoktx.onView
 import com.example.twitter.espressoktx.replaceText
 
+fun loginRobot(action: LoginRobot.() -> Unit) = LoginRobot().apply(action)
+
 class LoginRobot {
 	fun setUsername(username: String): LoginRobot {
 		onUsernameView().replaceText(username)
@@ -17,10 +19,10 @@ class LoginRobot {
 		return this
 	}
 
-	fun login(): TweetsRobot {
+	fun login(action: TweetsRobot.() -> Unit): TweetsRobot {
 		onLoginButton().click()
 
-		return TweetsRobot()
+		return TweetsRobot().apply(action)
 	}
 
 	private fun onUsernameView(): ViewInteraction {
