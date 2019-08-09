@@ -1,10 +1,10 @@
-package com.example.twitter.robots
+package com.example.twitter.ui.robots
 
 import androidx.test.espresso.ViewInteraction
 import com.example.twitter.R
-import com.example.twitter.espressoktx.click
-import com.example.twitter.espressoktx.onView
-import com.example.twitter.espressoktx.replaceText
+import com.example.twitter.ui.espressoktx.click
+import com.example.twitter.ui.espressoktx.onView
+import com.example.twitter.ui.espressoktx.replaceText
 
 fun loginRobot(action: LoginRobot.() -> Unit) = LoginRobot().apply(action)
 

@@ -5,8 +5,8 @@ import com.example.twitter.daggerMockRule
 import com.example.twitter.data.api.ApiResponse
 import com.example.twitter.data.api.RestApi
 import com.example.twitter.data.dto.User
-import com.example.twitter.robots.loginRobot
-import com.example.twitter.robots.verify
+import com.example.twitter.ui.robots.loginRobot
+import com.example.twitter.ui.robots.verify
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single

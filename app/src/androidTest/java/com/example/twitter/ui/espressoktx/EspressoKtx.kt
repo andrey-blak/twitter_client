@@ -1,6 +1,6 @@
 @file:JvmName("Espresso")
 
-package com.example.twitter.espressoktx
+package com.example.twitter.ui.espressoktx
 
 import android.app.Activity
 import androidx.test.espresso.Espresso

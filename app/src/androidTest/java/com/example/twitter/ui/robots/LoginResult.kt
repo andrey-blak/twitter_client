@@ -1,4 +1,4 @@
-package com.example.twitter.robots
+package com.example.twitter.ui.robots
 
 import android.app.Activity
 import androidx.test.espresso.Espresso.onView
@@ -6,7 +6,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.twitter.R
-import com.example.twitter.espressoktx.onToast
+import com.example.twitter.ui.espressoktx.onToast
 
 class LoginResult {
 	fun checkSuccessful() {
